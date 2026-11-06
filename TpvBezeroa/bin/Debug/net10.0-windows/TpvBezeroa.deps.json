@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "TpvBezeroa/1.0.0": {
+        "dependencies": {
+          "TpvPartekatua": "1.0.0"
+        },
+        "runtime": {
+          "TpvBezeroa.dll": {}
+        }
+      },
+      "TpvPartekatua/1.0.0": {
+        "runtime": {
+          "TpvPartekatua.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "TpvBezeroa/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "TpvPartekatua/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

@@ -1,0 +1,15 @@
+﻿<UserControl x:Class="TpvBezeroa.MahaiControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             Width="150" Height="110" Cursor="Hand">
+    <Border x:Name="Txartela" BorderThickness="3" CornerRadius="4" Margin="4">
+        <StackPanel VerticalAlignment="Center">
+            <Border x:Name="MahaiForma" Background="BurlyWood" BorderBrush="SaddleBrown"
+                    BorderThickness="1" HorizontalAlignment="Center">
+                <TextBlock x:Name="ZenbakiaTestua" HorizontalAlignment="Center"
+                           VerticalAlignment="Center" FontWeight="Bold" />
+            </Border>
+            <TextBlock x:Name="Testua" HorizontalAlignment="Center" Margin="0,6,0,0" />
+        </StackPanel>
+    </Border>
+</UserControl>

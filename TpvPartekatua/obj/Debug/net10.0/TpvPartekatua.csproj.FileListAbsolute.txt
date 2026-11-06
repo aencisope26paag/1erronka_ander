@@ -1,0 +1,11 @@
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\bin\Debug\net10.0\TpvPartekatua.deps.json
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\bin\Debug\net10.0\TpvPartekatua.dll
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\bin\Debug\net10.0\TpvPartekatua.pdb
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.GeneratedMSBuildEditorConfig.editorconfig
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.AssemblyInfoInputs.cache
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.AssemblyInfo.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.csproj.CoreCompileInputs.cache
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.dll
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\refint\TpvPartekatua.dll
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.pdb
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\ref\TpvPartekatua.dll

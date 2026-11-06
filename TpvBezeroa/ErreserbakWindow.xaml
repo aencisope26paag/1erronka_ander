@@ -1,0 +1,58 @@
+﻿<Window x:Class="TpvBezeroa.ErreserbakWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Mahai-erreserbak" Height="520" Width="820"
+        WindowStartupLocation="CenterOwner">
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="240" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Barra superior: fecha, servicio y leyenda -->
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,0,0,10">
+            <TextBlock Text="Data:" VerticalAlignment="Center" Margin="0,0,6,0" />
+            <DatePicker x:Name="DataPicker" Width="130" />
+            <TextBlock Text="Zerbitzua:" VerticalAlignment="Center" Margin="20,0,6,0" />
+            <ComboBox x:Name="ZerbitzuaCombo" Width="110">
+                <ComboBoxItem Content="Bazkaria" />
+                <ComboBoxItem Content="Afaria" />
+            </ComboBox>
+            <Border Background="LightGreen" BorderBrush="Green" BorderThickness="1"
+                    Width="16" Height="16" Margin="30,0,4,0" />
+            <TextBlock Text="Libre" VerticalAlignment="Center" />
+            <Border Background="LightPink" BorderBrush="Firebrick" BorderThickness="1"
+                    Width="16" Height="16" Margin="15,0,4,0" />
+            <TextBlock Text="Erreserbatuta" VerticalAlignment="Center" />
+        </StackPanel>
+
+        <!-- Mesas -->
+        <GroupBox Grid.Row="1" Header="Mahaiak" Margin="0,0,10,0">
+            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <WrapPanel x:Name="MahaiPanela" />
+            </ScrollViewer>
+        </GroupBox>
+
+        <!-- Panel derecho -->
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <GroupBox Header="Erabiltzailearen erreserba">
+                <StackPanel Margin="8">
+                    <TextBlock x:Name="ErabiltzaileaTextBlock" Margin="0,0,0,8" />
+                    <TextBlock x:Name="HautatutakoaTextBlock" Text="Hautatutako mahaia: -" />
+                    <TextBlock x:Name="EdukieraTextBlock" Margin="0,2,0,10" />
+                    <Button x:Name="ErreserbaButton" Content="Erreserba egin"
+                            Click="Erreserba_Click" Padding="6" Margin="0,0,0,6" />
+                    <Button x:Name="EzabatuButton" Content="Erreserba ezabatu"
+                            Click="Ezabatu_Click" Padding="6" />
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Egindako erreserbak" Margin="0,10,0,0">
+                <ListBox x:Name="ErreserbenZerrenda" Height="160" />
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>

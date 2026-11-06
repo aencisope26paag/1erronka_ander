@@ -1,0 +1,7 @@
+<Solution>
+  <Folder Name="/Tpv/">
+    <Project Path="TpvBezeroa/TpvBezeroa.csproj" />
+    <Project Path="TpvPartekatua/TpvPartekatua.csproj" Id="36ca32fb-1263-4ca5-8b2b-e1fef5ccb226" />
+    <Project Path="TpvZerbitzaria/TpvZerbitzaria.csproj" Id="61623d3f-7f59-406e-bac5-69a6c30c4e7a" />
+  </Folder>
+</Solution>
