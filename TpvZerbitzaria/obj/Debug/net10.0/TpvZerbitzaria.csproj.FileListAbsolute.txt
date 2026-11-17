@@ -42,3 +42,4 @@ C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvZerbitzaria\bin\Debug\net10.0\
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvZerbitzaria\bin\Debug\net10.0\runtimes\win-arm64\native\e_sqlite3.dll
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvZerbitzaria\bin\Debug\net10.0\runtimes\win-x64\native\e_sqlite3.dll
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvZerbitzaria\bin\Debug\net10.0\runtimes\win-x86\native\e_sqlite3.dll
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvZerbitzaria\obj\Debug\net10.0\TpvZerbitzaria.sourcelink.json

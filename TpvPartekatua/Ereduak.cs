@@ -5,6 +5,8 @@ public class Erabiltzailea
     public long Id { get; set; }
     public string Izena { get; set; } = "";
     public string Rola { get; set; } = "Erabiltzailea"; // Admin edo Erabiltzailea
+
+    public string Pasahitza { get; set; } = "";
 }
 
 public class Produktua
@@ -31,4 +33,17 @@ public class Erreserba
     public long ErabiltzaileId { get; set; }
     public DateTime Data { get; set; }
     public string Zerbitzua { get; set; } = "Bazkaria"; // Bazkaria edo Afaria
+}
+
+public class TicketLerroa
+{
+    public long ProduktuId { get; set; }
+    public string Izena { get; set; } = "";
+    public decimal Prezioa { get; set; }
+    public int Kantitatea { get; set; }
+
+    public decimal Guztira
+    {
+        get { return Prezioa * Kantitatea; }
+    }
 }

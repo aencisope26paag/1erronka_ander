@@ -22,8 +22,17 @@ public partial class MainWindow : Window
         ErreserbakButton.Visibility = admin ? Visibility.Collapsed : Visibility.Visible;
     }
 
-    private void Tpv_Click(object sender, RoutedEventArgs e) => MessageBox.Show("TPV pantaila hemen egongo da.");
+    private void Tpv_Click(object sender, RoutedEventArgs e)
+    {
+        TpvWindow leihoa = new TpvWindow();
+        leihoa.Owner = this;
+        leihoa.ShowDialog();
+    }
     private void Erreserbak_Click(object sender, RoutedEventArgs e)
-        => new ErreserbakWindow(_erabiltzailea) { Owner = this }.ShowDialog(); private void Erabiltzaileak_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Erabiltzaileen kudeaketa hemen egongo da.");
-    private void Stocka_Click(object sender, RoutedEventArgs e) => MessageBox.Show("Stockaren kudeaketa hemen egongo da.");
+        => new ErreserbakWindow(_erabiltzailea) { Owner = this }.ShowDialog();
+    private void Erabiltzaileak_Click(object sender, RoutedEventArgs e)
+    => new ErabiltzaileakWindow(_erabiltzailea) { Owner = this }.ShowDialog();
+
+    private void Stocka_Click(object sender, RoutedEventArgs e)
+    => new StockaWindow { Owner = this }.ShowDialog();
 }

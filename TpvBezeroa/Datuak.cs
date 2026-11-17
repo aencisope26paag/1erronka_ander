@@ -1,82 +1,238 @@
-﻿using TpvPartekatua;
+﻿using System.IO;
+using System.Net.Sockets;
+using System.Text.Json;
+using TpvPartekatua;
 
 namespace TpvBezeroa;
 
-// DATOS DE PRUEBA EN MEMORIA.
-// Más adelante, el interior de estos métodos pedirá los datos al servidor.
+// Todos los datos se piden al servidor por TCP.
+// Las ventanas siguen llamando a estos mismos métodos de siempre.
 public static class Datuak
 {
-    private static readonly List<(long Id, string Izena, string Pasahitza, string Rola)> _erabiltzaileak = new()
+    // ---------- Conexión con el servidor ----------
+
+    private static TcpClient? _bezeroa;
+    private static StreamReader? _irakurlea;
+    private static StreamWriter? _idazlea;
+
+    // Se conecta la primera vez que hace falta; después reutiliza la conexión.
+    private static void Konektatu()
     {
-        (1, "admin", "admin123", "Admin"),
-        (2, "ane", "ane123", "Erabiltzailea")
-    };
+        if (_bezeroa != null) return;
 
-    private static readonly List<Mahaia> _mahaiak = new()
+        try
+        {
+            TcpClient bezeroa = new TcpClient(Protokoloa.Helbidea, Protokoloa.Portua);
+            NetworkStream stream = bezeroa.GetStream();
+
+            _irakurlea = new StreamReader(stream);
+            _idazlea = new StreamWriter(stream);
+            _idazlea.AutoFlush = true;
+            _bezeroa = bezeroa;
+        }
+        catch (SocketException)
+        {
+            throw new Exception("Ezin da zerbitzarira konektatu. Zerbitzaria martxan dago?");
+        }
+    }
+
+    public static void Deskonektatu()
     {
-        new() { Id = 1, Zenbakia = 1, Eserlekuak = 2, Forma = "Biribila" },
-        new() { Id = 2, Zenbakia = 2, Eserlekuak = 4, Forma = "Karratua" },
-        new() { Id = 3, Zenbakia = 3, Eserlekuak = 6, Forma = "Luzea" },
-        new() { Id = 4, Zenbakia = 4, Eserlekuak = 2, Forma = "Karratua" },
-        new() { Id = 5, Zenbakia = 5, Eserlekuak = 4, Forma = "Biribila" },
-        new() { Id = 6, Zenbakia = 6, Eserlekuak = 8, Forma = "Luzea" }
-    };
+        if (_bezeroa != null)
+        {
+            _bezeroa.Close();
+        }
+        _bezeroa = null;
+        _irakurlea = null;
+        _idazlea = null;
+    }
 
-    private static readonly List<Erreserba> _erreserbak = new();
-    private static long _hurrengoErreserbaId = 1;
+    // Manda una petición (una línea JSON) y espera la respuesta (otra línea JSON).
+    private static Erantzuna Eskatu(Eskaera eskaera)
+    {
+        Konektatu();
 
-    // ---------- Login ----------
+        StreamWriter? idazlea = _idazlea;
+        StreamReader? irakurlea = _irakurlea;
+        if (idazlea == null || irakurlea == null)
+        {
+            throw new Exception("Ez dago konexiorik zerbitzariarekin.");
+        }
+
+        try
+        {
+            idazlea.WriteLine(JsonSerializer.Serialize(eskaera));
+            string? lerroa = irakurlea.ReadLine();
+
+            if (lerroa == null)
+            {
+                Deskonektatu();
+                throw new Exception("Zerbitzariak konexioa itxi du.");
+            }
+
+            Erantzuna? erantzuna = JsonSerializer.Deserialize<Erantzuna>(lerroa);
+            if (erantzuna == null)
+            {
+                throw new Exception("Zerbitzariaren erantzuna baliogabea da.");
+            }
+
+            if (erantzuna.Akatsa != null)
+            {
+                Deskonektatu(); // la próxima llamada volverá a conectar
+                throw new Exception(erantzuna.Akatsa);
+            }
+
+            return erantzuna;
+        }
+        catch (IOException)
+        {
+            Deskonektatu();
+            throw new Exception("Konexioa galdu da zerbitzariarekin.");
+        }
+    }
+
+    // ---------- Erabiltzaileak ----------
 
     public static Erabiltzailea? Login(string izena, string pasahitza)
     {
-        foreach (var u in _erabiltzaileak)
-        {
-            if (u.Izena == izena && u.Pasahitza == pasahitza)
-                return new Erabiltzailea { Id = u.Id, Izena = u.Izena, Rola = u.Rola };
-        }
-        return null;
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "Login";
+        eskaera.Izena = izena;
+        eskaera.Pasahitza = pasahitza;
+        return Eskatu(eskaera).Erabiltzailea;
+    }
+
+    public static List<Erabiltzailea> Erabiltzaileak()
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "Erabiltzaileak";
+        return Eskatu(eskaera).Erabiltzaileak;
+    }
+
+    // Crea (Id = 0) o modifica un usuario. Devuelve un mensaje de error, o null si todo va bien.
+    public static string? ErabiltzaileaGorde(Erabiltzailea erabiltzailea)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErabiltzaileaGorde";
+        eskaera.Erabiltzailea = erabiltzailea;
+        return Eskatu(eskaera).Mezua;
+    }
+
+    // Borra un usuario y sus reservas. No se puede borrar a uno mismo.
+    public static string? ErabiltzaileaEzabatu(long id, long unekoaId)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErabiltzaileaEzabatu";
+        eskaera.Id = id;
+        eskaera.UnekoaId = unekoaId;
+        return Eskatu(eskaera).Mezua;
     }
 
     // ---------- Mahaiak eta erreserbak ----------
 
-    public static List<Mahaia> Mahaiak() => _mahaiak.ToList();
+    public static List<Mahaia> Mahaiak()
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "Mahaiak";
+        return Eskatu(eskaera).Mahaiak;
+    }
 
     public static Erreserba? ErreserbaLortu(long mahaiId, DateTime data, string zerbitzua)
-        => _erreserbak.FirstOrDefault(r => r.MahaiId == mahaiId
-                                        && r.Data.Date == data.Date
-                                        && r.Zerbitzua == zerbitzua);
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErreserbaLortu";
+        eskaera.MahaiId = mahaiId;
+        eskaera.Data = data;
+        eskaera.Zerbitzua = zerbitzua;
+        return Eskatu(eskaera).Erreserba;
+    }
 
     public static bool ErreserbaEgin(long mahaiId, long erabiltzaileId, DateTime data, string zerbitzua)
     {
-        if (ErreserbaLortu(mahaiId, data, zerbitzua) != null) return false; // jada okupatuta
-
-        _erreserbak.Add(new Erreserba
-        {
-            Id = _hurrengoErreserbaId++,
-            MahaiId = mahaiId,
-            ErabiltzaileId = erabiltzaileId,
-            Data = data.Date,
-            Zerbitzua = zerbitzua
-        });
-        return true;
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErreserbaEgin";
+        eskaera.MahaiId = mahaiId;
+        eskaera.ErabiltzaileId = erabiltzaileId;
+        eskaera.Data = data;
+        eskaera.Zerbitzua = zerbitzua;
+        return Eskatu(eskaera).Emaitza;
     }
 
     public static void ErreserbaEzabatu(long mahaiId, DateTime data, string zerbitzua)
     {
-        var erreserba = ErreserbaLortu(mahaiId, data, zerbitzua);
-        if (erreserba != null) _erreserbak.Remove(erreserba);
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErreserbaEzabatu";
+        eskaera.MahaiId = mahaiId;
+        eskaera.Data = data;
+        eskaera.Zerbitzua = zerbitzua;
+        Eskatu(eskaera);
     }
 
-    // Testu-zerrenda "Egindako erreserbak" koadrorako
+    // Cambia una reserva a otra mesa, fecha o servicio. (La usaremos en el paso 4.)
+    // Devuelve un mensaje de error, o null si todo va bien.
+    public static string? ErreserbaAldatu(long erreserbaId, long mahaiBerriaId, DateTime dataBerria, string zerbitzuaBerria)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErreserbaAldatu";
+        eskaera.Id = erreserbaId;
+        eskaera.MahaiId = mahaiBerriaId;
+        eskaera.Data = dataBerria;
+        eskaera.Zerbitzua = zerbitzuaBerria;
+        return Eskatu(eskaera).Mezua;
+    }
+
+    // Texto para la lista "Egindako erreserbak"
     public static List<string> ErreserbenZerrenda(DateTime data, string zerbitzua)
     {
-        var zerrenda = new List<string>();
-        foreach (var r in _erreserbak.Where(x => x.Data.Date == data.Date && x.Zerbitzua == zerbitzua))
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ErreserbenZerrenda";
+        eskaera.Data = data;
+        eskaera.Zerbitzua = zerbitzua;
+        return Eskatu(eskaera).Zerrenda;
+    }
+
+    // ---------- Produktuak ----------
+
+    public static List<Produktua> Produktuak()
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "Produktuak";
+        return Eskatu(eskaera).Produktuak;
+    }
+
+    // Crea (Id = 0) o modifica un producto. Devuelve un mensaje de error, o null si todo va bien.
+    public static string? ProduktuaGorde(Produktua produktua)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ProduktuaGorde";
+        eskaera.Produktua = produktua;
+        return Eskatu(eskaera).Mezua;
+    }
+
+    public static void ProduktuaEzabatu(long id)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "ProduktuaEzabatu";
+        eskaera.Id = id;
+        Eskatu(eskaera);
+    }
+
+    // Confirma la compra: el servidor comprueba el stock y lo descuenta.
+    public static bool Erosi(List<TicketLerroa> lerroak, out string mezua)
+    {
+        Eskaera eskaera = new Eskaera();
+        eskaera.Komandoa = "Erosi";
+        eskaera.Lerroak = lerroak;
+
+        Erantzuna erantzuna = Eskatu(eskaera);
+        if (erantzuna.Mezua == null)
         {
-            var mahaia = _mahaiak.First(m => m.Id == r.MahaiId);
-            var erabiltzailea = _erabiltzaileak.First(u => u.Id == r.ErabiltzaileId);
-            zerrenda.Add($"{mahaia.Zenbakia}. mahaia - {erabiltzailea.Izena}");
+            mezua = "";
         }
-        return zerrenda;
+        else
+        {
+            mezua = erantzuna.Mezua;
+        }
+        return erantzuna.Emaitza;
     }
 }

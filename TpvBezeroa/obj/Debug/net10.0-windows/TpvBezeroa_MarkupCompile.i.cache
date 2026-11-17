@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET10_0;NETCOREAPP;WINDOWS;WINDOWS7_0;NET5_0_OR_GREATER;NET6_0_OR_GREATER;NET7_0_OR_GREATER;NET8_0_OR_GREATER;NET9_0_OR_GREATER;NET10_0_OR_GREATER;NETCOREAPP3_0_OR_GREATER;NETCOREAPP3_1_OR_GREATER;WINDOWS7_0_OR_GREATER
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\App.xaml
-4-939699759
+9-2039792561
 
-10-946876387
+15-279883862
 207-1255176585
-ErreserbakWindow.xaml;LoginWindow.xaml;MahaiControl.xaml;MainWindow.xaml;
+ErabiltzaileakWindow.xaml;ErreserbakWindow.xaml;LoginWindow.xaml;MahaiControl.xaml;MainWindow.xaml;ProduktuControl.xaml;StockaWindow.xaml;TiketaWindow.xaml;TpvWindow.xaml;
 
 False
 

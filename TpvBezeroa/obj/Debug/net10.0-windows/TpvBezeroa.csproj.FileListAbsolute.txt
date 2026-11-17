@@ -27,3 +27,14 @@ C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-wind
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\MahaiControl.baml
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\ErreserbakWindow.g.cs
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\MahaiControl.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\ErabiltzaileakWindow.baml
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\ProduktuControl.baml
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\StockaWindow.baml
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\TiketaWindow.baml
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\TpvWindow.baml
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\ErabiltzaileakWindow.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\ProduktuControl.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\StockaWindow.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\TiketaWindow.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\TpvWindow.g.cs
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvBezeroa\obj\Debug\net10.0-windows\TpvBezeroa.sourcelink.json

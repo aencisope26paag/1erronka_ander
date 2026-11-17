@@ -9,3 +9,4 @@ C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\T
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\refint\TpvPartekatua.dll
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.pdb
 C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\ref\TpvPartekatua.dll
+C:\Ander\1.Ebaluaketako erronka - Ander Enciso\TpvPartekatua\obj\Debug\net10.0\TpvPartekatua.sourcelink.json

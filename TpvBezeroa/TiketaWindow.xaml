@@ -1,0 +1,18 @@
+﻿<Window x:Class="TpvBezeroa.TiketaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Tiketa" Width="380" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner" ResizeMode="NoResize">
+    <StackPanel Margin="12">
+        <Border x:Name="TiketaBorder" Background="White" BorderBrush="Gray"
+                BorderThickness="1" Padding="12">
+            <TextBlock x:Name="TiketaTestua" FontFamily="Consolas" FontSize="13" />
+        </Border>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Inprimatu" Click="Inprimatu_Click" Padding="10,4" Margin="0,0,8,0" />
+            <Button Content="Baieztatu" Click="Baieztatu_Click" Padding="10,4" Margin="0,0,8,0" IsDefault="True" />
+            <Button Content="Utzi" IsCancel="True" Padding="10,4" />
+        </StackPanel>
+    </StackPanel>
+</Window>
