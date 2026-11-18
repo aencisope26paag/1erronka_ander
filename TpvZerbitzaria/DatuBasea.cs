@@ -24,7 +24,8 @@ public class DatuBasea
             Izena TEXT NOT NULL UNIQUE,
             Prezioa REAL NOT NULL CHECK(Prezioa >= 0),
             Stocka INTEGER NOT NULL CHECK(Stocka >= 0),
-            Kategoria TEXT NOT NULL
+            Kategoria TEXT NOT NULL,
+            Irudia BLOB
         );
         CREATE TABLE IF NOT EXISTS Mahaiak (
             Id INTEGER PRIMARY KEY,
@@ -355,7 +356,7 @@ public class DatuBasea
         {
             using var konexioa = Ireki();
             using var komandoa = konexioa.CreateCommand();
-            komandoa.CommandText = "SELECT Id, Izena, Prezioa, Stocka, Kategoria FROM Produktuak ORDER BY Id;";
+            komandoa.CommandText = "SELECT Id, Izena, Prezioa, Stocka, Kategoria, Irudia FROM Produktuak ORDER BY Id;";
 
             using var irakurlea = komandoa.ExecuteReader();
             while (irakurlea.Read())
@@ -366,6 +367,12 @@ public class DatuBasea
                 p.Prezioa = Convert.ToDecimal(irakurlea.GetDouble(2));
                 p.Stocka = irakurlea.GetInt32(3);
                 p.Kategoria = irakurlea.GetString(4);
+
+                if (!irakurlea.IsDBNull(5))
+                {
+                    p.Irudia = (byte[])irakurlea.GetValue(5);
+                }
+
                 zerrenda.Add(p);
             }
         }
@@ -401,17 +408,27 @@ public class DatuBasea
             using var komandoa = konexioa.CreateCommand();
             if (p.Id == 0)
             {
-                komandoa.CommandText = "INSERT INTO Produktuak (Izena, Prezioa, Stocka, Kategoria) VALUES ($i, $p, $s, $k);";
+                komandoa.CommandText = "INSERT INTO Produktuak (Izena, Prezioa, Stocka, Kategoria, Irudia) VALUES ($i, $p, $s, $k, $irudia);";
             }
             else
             {
-                komandoa.CommandText = "UPDATE Produktuak SET Izena = $i, Prezioa = $p, Stocka = $s, Kategoria = $k WHERE Id = $id;";
+                komandoa.CommandText = "UPDATE Produktuak SET Izena = $i, Prezioa = $p, Stocka = $s, Kategoria = $k, Irudia = $irudia WHERE Id = $id;";
                 komandoa.Parameters.AddWithValue("$id", p.Id);
             }
             komandoa.Parameters.AddWithValue("$i", p.Izena);
             komandoa.Parameters.AddWithValue("$p", Convert.ToDouble(p.Prezioa));
             komandoa.Parameters.AddWithValue("$s", p.Stocka);
             komandoa.Parameters.AddWithValue("$k", p.Kategoria);
+
+            if (p.Irudia == null)
+            {
+                komandoa.Parameters.AddWithValue("$irudia", DBNull.Value);
+            }
+            else
+            {
+                komandoa.Parameters.AddWithValue("$irudia", p.Irudia);
+            }
+
             komandoa.ExecuteNonQuery();
             return null;
         }

@@ -16,6 +16,7 @@ public class Produktua
     public decimal Prezioa { get; set; }
     public int Stocka { get; set; }
     public string Kategoria { get; set; } = "";
+    public byte[]? Irudia { get; set; }
 }
 
 public class Mahaia

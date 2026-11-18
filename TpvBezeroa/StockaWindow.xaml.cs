@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using Microsoft.Win32;
+using System.IO;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using TpvPartekatua;
@@ -8,6 +10,7 @@ namespace TpvBezeroa;
 public partial class StockaWindow : Window
 {
     private Produktua? _hautatua;   // null = se está creando uno nuevo
+    private byte[]? _irudia = null;   // imagen del producto que se está editando
 
     public StockaWindow()
     {
@@ -32,6 +35,8 @@ public partial class StockaWindow : Window
         StockaBox.Text = "";
         EzabatuButton.IsEnabled = false;
         IzenaBox.Focus();
+        _irudia = null;
+        IrudiaAurrebista.Source = null;
     }
 
     private void Taula_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -43,6 +48,8 @@ public partial class StockaWindow : Window
         KategoriaBox.Text = p.Kategoria;
         PrezioaBox.Text = p.Prezioa.ToString("0.00");
         StockaBox.Text = p.Stocka.ToString();
+        _irudia = p.Irudia;
+        IrudiaAurrebista.Source = Irudiak.Sortu(_irudia);
         EzabatuButton.IsEnabled = true;
         MezuaTextBlock.Text = "";
     }
@@ -75,6 +82,8 @@ public partial class StockaWindow : Window
             Stocka = stocka
         };
 
+        p.Irudia = _irudia;
+
         var errorea = Datuak.ProduktuaGorde(p);
         if (errorea != null)
         {
@@ -99,5 +108,31 @@ public partial class StockaWindow : Window
         Taula.ItemsSource = Datuak.Produktuak();
         FormularioaGarbitu();
         Mezua("Ezabatuta.", false);
+    }
+
+    private void Irudia_Click(object sender, RoutedEventArgs e)
+    {
+        OpenFileDialog dialogoa = new OpenFileDialog();
+        dialogoa.Filter = "Irudiak (*.png;*.jpg;*.jpeg)|*.png;*.jpg;*.jpeg";
+
+        if (dialogoa.ShowDialog() != true) return;
+
+        FileInfo fitxategia = new FileInfo(dialogoa.FileName);
+        if (fitxategia.Length > 300 * 1024)
+        {
+            Mezua("Irudia handiegia da (gehienez 300 KB).", true);
+            return;
+        }
+
+        byte[] datuak = File.ReadAllBytes(dialogoa.FileName);
+        if (Irudiak.Sortu(datuak) == null)
+        {
+            Mezua("Fitxategi hori ez da irudi baliodun bat.", true);
+            return;
+        }
+
+        _irudia = datuak;
+        IrudiaAurrebista.Source = Irudiak.Sortu(_irudia);
+        Mezua("Irudia aukeratuta. Sakatu 'Gorde' aldaketa gordetzeko.", false);
     }
 }

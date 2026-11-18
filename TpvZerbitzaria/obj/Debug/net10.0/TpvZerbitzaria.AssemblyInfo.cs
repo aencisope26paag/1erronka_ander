@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TpvZerbitzaria")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+65de20eb58b94e055cc862a4362138444416529f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e31f8f031e45851c993a858bce9b8c6c80bf02d9")]
 [assembly: System.Reflection.AssemblyProductAttribute("TpvZerbitzaria")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TpvZerbitzaria")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

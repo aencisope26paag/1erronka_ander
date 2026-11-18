@@ -2,6 +2,7 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace TpvBezeroa;
 
@@ -17,6 +18,37 @@ public partial class ProduktuControl : UserControl
 
     public static readonly DependencyProperty StockaProperty = DependencyProperty.Register(
         "Stocka", typeof(int), typeof(ProduktuControl), new PropertyMetadata(0, Aldatuta));
+
+    public static readonly DependencyProperty IrudiaProperty = DependencyProperty.Register(
+    "Irudia", typeof(byte[]), typeof(ProduktuControl), new PropertyMetadata(null, IrudiaAldatuta));
+
+    public byte[]? Irudia
+    {
+        get { return (byte[]?)GetValue(IrudiaProperty); }
+        set { SetValue(IrudiaProperty, value); }
+    }
+
+    private static void IrudiaAldatuta(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        ProduktuControl kontrola = (ProduktuControl)d;
+        kontrola.IrudiaErakutsi();
+    }
+
+    // Muestra la imagen del producto, o el icono de plato si no tiene
+    private void IrudiaErakutsi()
+    {
+        BitmapImage? bitmapa = Irudiak.Sortu(Irudia);
+        IrudiaIrudia.Source = bitmapa;
+
+        if (bitmapa == null)
+        {
+            IrudiaOrdezkoa.Visibility = Visibility.Visible;
+        }
+        else
+        {
+            IrudiaOrdezkoa.Visibility = Visibility.Collapsed;
+        }
+    }
 
     public string Izena
     {

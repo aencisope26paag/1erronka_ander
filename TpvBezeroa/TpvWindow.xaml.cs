@@ -6,11 +6,13 @@ namespace TpvBezeroa;
 public partial class TpvWindow : Window
 {
     private List<TicketLerroa> _tiketa = new List<TicketLerroa>();
+    private List<Produktua> _produktuak = new List<Produktua>();
 
     public TpvWindow()
     {
         InitializeComponent();
         TiketaGrid.ItemsSource = _tiketa;
+        _produktuak = Datuak.Produktuak();
         Eguneratu();
     }
 
@@ -42,7 +44,7 @@ public partial class TpvWindow : Window
     {
         ProduktuPanela.Children.Clear();
 
-        foreach (Produktua p in Datuak.Produktuak())
+        foreach (Produktua p in _produktuak)
         {
             // Stock disponible = stock real - lo que ya está en el ticket
             int tiketan = 0;
@@ -56,6 +58,7 @@ public partial class TpvWindow : Window
             kontrola.Izena = p.Izena;
             kontrola.Prezioa = p.Prezioa;
             kontrola.Stocka = p.Stocka - tiketan;
+            kontrola.Irudia = p.Irudia;
             kontrola.Tag = p;
             kontrola.Aukeratuta += Produktua_Aukeratuta;
             ProduktuPanela.Children.Add(kontrola);
@@ -132,6 +135,7 @@ public partial class TpvWindow : Window
         }
 
         _tiketa.Clear();
+        _produktuak = Datuak.Produktuak();
         Eguneratu();
         MessageBox.Show("Erosketa baieztatuta. Stocka eguneratu da.");
     }

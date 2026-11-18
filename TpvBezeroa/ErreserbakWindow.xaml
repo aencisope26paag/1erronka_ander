@@ -1,7 +1,7 @@
 ﻿<Window x:Class="TpvBezeroa.ErreserbakWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Mahai-erreserbak" Height="520" Width="820"
+        Title="Mahai-erreserbak" Height="600" Width="820"
         WindowStartupLocation="CenterOwner">
     <Grid Margin="12">
         <Grid.RowDefinitions>
@@ -45,9 +45,13 @@
                     <TextBlock x:Name="HautatutakoaTextBlock" Text="Hautatutako mahaia: -" />
                     <TextBlock x:Name="EdukieraTextBlock" Margin="0,2,0,10" />
                     <Button x:Name="ErreserbaButton" Content="Erreserba egin"
-                            Click="Erreserba_Click" Padding="6" Margin="0,0,0,6" />
+                Click="Erreserba_Click" Padding="6" Margin="0,0,0,6" />
+                    <Button x:Name="AldatuButton" Content="Erreserba aldatu"
+                Click="Aldatu_Click" Padding="6" Margin="0,0,0,6" />
                     <Button x:Name="EzabatuButton" Content="Erreserba ezabatu"
-                            Click="Ezabatu_Click" Padding="6" />
+                Click="Ezabatu_Click" Padding="6" />
+                    <TextBlock x:Name="AldaketaTextBlock" TextWrapping="Wrap"
+                   Foreground="DarkOrange" Margin="0,8,0,0" />
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Egindako erreserbak" Margin="0,10,0,0">
