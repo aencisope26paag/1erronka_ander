@@ -134,10 +134,6 @@ Datu-basea hutsetik hasteko, ezabatu `tpv.db` eta abiarazi zerbitzaria: berriro 
 └── TpvBezeroa/            WPF aplikazioa: leihoak eta ikus-osagaiak
 ```
 
-## Dokumentazioa
-
-- Gida teknikoa: `docs/` karpetan
-- Administratzailearen eta erabiltzailearen gida: `docs/` karpetan
 
 ## Ezagutzen diren mugak
 
